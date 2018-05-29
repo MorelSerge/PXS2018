@@ -1,0 +1,33 @@
+{% load static %}
+{% load compile_static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>PXS 2018</title>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0/dist/leaflet.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+            integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+            crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://unpkg.com/leaflet.pm@latest/dist/leaflet.pm.css" />
+        <link rel="stylesheet" type="text/css" href="{% static 'pxs/css/main.scss'|compile %}" />
+
+
+        <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet.js"></script>
+        <script src="https://unpkg.com/leaflet.pm@latest/dist/leaflet.pm.min.js"></script>
+        <script src="{% static 'pxs/js/leaflet-geodesy.js' %}"></script>
+        <script src="{% static 'pxs/js/main.js' %}"></script>
+    </head>
+    <body>
+        {% include "pxs/menu.html" %}
+        <div id="content">
+            {% block content %}{% endblock %}
+        </div>
+        {% include "pxs/map.html" %}
+    </body>
+</html>

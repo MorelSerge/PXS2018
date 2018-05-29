@@ -1,0 +1,17 @@
+{% load static %}
+
+<div id="map-wrapper">
+    <div id="map-inner-wrapper">
+        <div id="map-close">
+            <a href=""><i class="fas fa-times"></i></a>
+        </div>
+        <div id="map"></div>
+    </div>
+    <div id="alert-wrapper">
+        <div id="alert">Alert</div>
+    </div>
+    <script type="text/javascript">
+        var cantonsGeoJsonUrl = "{% url 'ui:countryCantons' 51701 %}";
+        var polygonGeoJsonUrl = "{% url 'ui:polygon' %}";
+    </script>
+</div>

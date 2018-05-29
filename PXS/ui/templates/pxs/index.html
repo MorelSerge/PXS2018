@@ -1,0 +1,99 @@
+{% extends "pxs/base.html" %}
+
+{% load static %}
+
+{% block content %}
+    <div id="scale-chooser">
+        <a href="#canton" class="option" data-type="canton">
+            Canton
+        </a>
+        <a href="#city" class="option selected" data-type="city">
+            City
+        </a>
+        <a href="#area" class="option" data-type="area">
+            Area
+        </a>
+    </div>
+    <div id="splitscreen">
+        <div class="field">
+            <div class="map">
+                <div class="map-image-wrapper" data-side="left">
+                    <div class="desc">
+                        <i class="fas fa-plus"></i><br />Choose an area
+                    </div>
+                </div>
+            </div>
+            <div class="stats-container">
+                <div class="name" data-side="left">
+                    <span>Choose an area</span>
+                </div>
+                <div class="stats" data-side="left">
+                    <div class="stat" data-type="rank">
+                        <div class="number">
+                            3
+                        </div>
+                        <div class="description">
+                            place in city ranking
+                        </div>
+                    </div>
+                    <div class="stat" data-type="tree-coverage">
+                        <div class="number">
+                            35
+                        </div>
+                        <div class="description">
+                            percentage tree coverage
+                        </div>
+                    </div>
+                    <div class="stat" data-type="score">
+                        <div class="number">
+                            82
+                        </div>
+                        <div class="description">
+                            overall city score
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <div class="map">
+                <div class="map-image-wrapper" data-side="right">
+                    <div class="desc">
+                        <i class="fas fa-plus"></i><br />Choose an area
+                    </div>
+                </div>
+            </div>
+            <div class="stats-container">
+                <div class="name" data-side="right">
+                    <span>Choose an area</span>
+                </div>
+                <div class="stats" data-side="right">
+                    <div class="stat" data-type="rank">
+                        <div class="number">
+                            3
+                        </div>
+                        <div class="description">
+                            place in city ranking
+                        </div>  
+                    </div>
+                    <div class="stat" data-type="tree-coverage">
+                        <div class="number">
+                            35
+                        </div>
+                        <div class="description">
+                            percentage tree coverage
+                        </div>
+                    </div>
+                    <div class="stat" data-type="score">
+                        <div class="number">
+                            82
+                        </div>
+                        <div class="description">
+                            overall city score
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

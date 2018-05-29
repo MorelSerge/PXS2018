@@ -1,0 +1,11 @@
+.ipynb_checkpoints/
+__pycache__/
+MidTerm/
+FinalPoster/
+Data/
+*.jpg
+*.bmp
+*.jpeg
+*.png
+*.p
+¨.h5

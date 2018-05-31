@@ -138,7 +138,6 @@ def get_polygon(data, densities=None, img_height=512):
         polygon_drawer.polygon(list(zip(x, y)), fill=(255, 255, 255, 0), outline=(71, 82, 94, (0 if densities else 255)))
 
     if densities:
-        print('hi')
         density_drawer = ImageDraw.Draw(back)
         circle_size = 0.00034332275
         circle_size *= 111.320 / 110.574 * math.cos(math.radians(averagey))
@@ -238,3 +237,6 @@ def calculate_sparsity(pred):
 def sparsity_to_representable(sparsity):
     """ Transforms a sparsity [0,1] to a usable coefficient """
     return math.exp(-sparsity) - math.exp(-1)
+
+def read_image(image):
+    return Image.open(image)

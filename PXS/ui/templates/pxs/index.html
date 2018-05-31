@@ -4,15 +4,100 @@
 
 {% block content %}
     <div id="scale-chooser">
-        <a href="#canton" class="option" data-type="canton">
-            Canton
-        </a>
-        <a href="#city" class="option selected" data-type="city">
-            City
-        </a>
-        <a href="#area" class="option" data-type="area">
-            Area
-        </a>
+        <div class="placeholder"></div>
+        <div class="buttons">
+            <a href="#canton" class="option" data-state="canton">
+                Canton
+            </a>
+            <a href="#city" class="option selected" data-state="city">
+                City
+            </a>
+            <a href="#area" class="option" data-state="area">
+                Area
+            </a>
+        </div>
+        <div class="switcher" data-state="map">
+            <a href="#">Statistics <i class="fas fa-toggle-on"></i> Map</a>
+        </div>
+    </div>
+    <div id="stat-compare-wrapper">
+        <div class="stat-compare-names">
+            <div class="name left"><span>-</span></div>
+            <div class="name middle"><span><i class="fas fa-arrows-alt-h"></i></span></div>
+            <div class="name right"><span>-</span></div>
+        </div>
+        <div class="stat-compare-scores">
+            <div class="score left"><span>0</span></div>
+            <div class="score middle"></div>
+            <div class="score right"><span>0</span></div>
+        </div>
+        <div class="stat-compare">
+            <div class="stat-wrapper density">
+                <div class="stat-inner-wrapper">
+                    <div class="stat-last-wrapper">
+                        <div class="stat-number left">-</div>
+                        <div class="stat first left"></div>
+                    </div>
+                    <div class="stat-last-wrapper">
+                        <div class="stat-number right">-</div>
+                        <div class="stat first right"></div>
+                    </div>
+                </div>
+                <div class="stat-name"><span>Tree density</span></div>
+            </div>
+            <div class="stat-wrapper sparsity">
+                <div class="stat-inner-wrapper">
+                    <div class="stat-last-wrapper">
+                        <div class="stat-number left">-</div>
+                        <div class="stat first left"></div>
+                    </div>
+                    <div class="stat-last-wrapper">
+                        <div class="stat-number right">-</div>
+                        <div class="stat first right"></div>
+                    </div>
+                </div>
+                <div class="stat-name"><span>Tree sparsity</span></div>
+            </div>
+            <div class="stat-wrapper cars">
+                <div class="stat-inner-wrapper">
+                    <div class="stat-last-wrapper">
+                        <div class="stat-number left">-</div>
+                        <div class="stat first left"></div>
+                    </div>
+                    <div class="stat-last-wrapper">
+                        <div class="stat-number right">-</div>
+                        <div class="stat first right"></div>
+                    </div>
+                </div>
+                <div class="stat-name"><span>Cars per inhabitant</span></div>
+            </div>
+            <div class="stat-wrapper area">
+                <div class="stat-inner-wrapper">
+                    <div class="stat-last-wrapper">
+                        <div class="stat-number left">-</div>
+                        <div class="stat first left"></div>
+                    </div>
+                    <div class="stat-last-wrapper">
+                        <div class="stat-number right">-</div>
+                        <div class="stat first right"></div>
+                    </div>
+                </div>
+                <div class="stat-name"><span>Relative area</span></div>
+            </div>
+            <div class="stat-wrapper population">
+                <div class="stat-inner-wrapper">
+                    <div class="stat-last-wrapper">
+                        <div class="stat-number left">-</div>
+                        <div class="stat first left"></div>
+                    </div>
+                    <div class="stat-last-wrapper">
+                        <div class="stat-number right">-</div>
+                        <div class="stat first right"></div>
+                    </div>
+                </div>
+                <div class="stat-name"><span>Relative population</span></div>
+            </div>
+        </div>
     </div>
     <div id="splitscreen">
         <div class="field">
@@ -30,7 +115,7 @@
                 <div class="stats" data-side="left">
                     <div class="stat" data-type="rank">
                         <div class="number">
-                            3
+                            -
                         </div>
                         <div class="description">
                             place in city ranking
@@ -38,7 +123,7 @@
                     </div>
                     <div class="stat" data-type="tree-coverage">
                         <div class="number">
-                            35
+                            -
                         </div>
                         <div class="description">
                             percentage tree coverage
@@ -46,7 +131,7 @@
                     </div>
                     <div class="stat" data-type="score">
                         <div class="number">
-                            82
+                            -
                         </div>
                         <div class="description">
                             overall city score
@@ -70,7 +155,7 @@
                 <div class="stats" data-side="right">
                     <div class="stat" data-type="rank">
                         <div class="number">
-                            3
+                            -
                         </div>
                         <div class="description">
                             place in city ranking
@@ -78,7 +163,7 @@
                     </div>
                     <div class="stat" data-type="tree-coverage">
                         <div class="number">
-                            35
+                            -
                         </div>
                         <div class="description">
                             percentage tree coverage
@@ -86,7 +171,7 @@
                     </div>
                     <div class="stat" data-type="score">
                         <div class="number">
-                            82
+                            -
                         </div>
                         <div class="description">
                             overall city score

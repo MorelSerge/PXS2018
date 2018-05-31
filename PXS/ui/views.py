@@ -12,6 +12,7 @@ from django.db.models.aggregates import Avg, Sum
 from django.contrib.gis.db.models import GeometryField
 from django.contrib.gis.db.models.functions import Area
 from django.contrib.gis.geos import GEOSGeometry
+from django.contrib.staticfiles.templatetags.staticfiles import static
 from ui import functions, models
 
 
@@ -47,8 +48,11 @@ def canton(request, id):
     response = {}
     canton = models.Canton.objects.filter(id=id).first()
     if canton:
-        response = json.loads(serialize('json', [canton], fields=('pk', 'name', 'tree_density', 'score', 'has_mapping')))[0]
+        response = json.loads(serialize('json', [canton], fields=('pk', 'name', 'tree_density', 'tree_sparsity', 'score', 'has_mapping')))[0]
         response['fields']['rank'] = canton.get_rank()
+        response['fields']['rel_population'] = canton.get_relative_population()
+        response['fields']['rel_area'] = canton.get_relative_area()
+        response['fields']['cars_pp'] = canton.get_cars_pp()
     return JsonResponse(response)
 
 @require_http_methods(["GET"])
@@ -66,8 +70,11 @@ def city(request, id):
     response = {}
     city = models.City.objects.filter(id=id).first()
     if city:
-        response = json.loads(serialize('json', [city], fields=('pk', 'name', 'tree_density', 'score', 'has_mapping')))[0]
+        response = json.loads(serialize('json', [city], fields=('pk', 'name', 'tree_density', 'tree_sparsity', 'score', 'has_mapping')))[0]
         response['fields']['rank'] = city.get_rank()
+        response['fields']['rel_population'] = city.get_relative_population()
+        response['fields']['rel_area'] = city.get_relative_area()
+        response['fields']['cars_pp'] = city.get_cars_pp()
     return JsonResponse(response)
 
 @require_http_methods(["GET"])
@@ -126,6 +133,7 @@ def polygonStats(request):
             ])
             response['tree_density'] = tree_density
             response['tree_sparsity'] = tree_sparsity
+            response['rel_area'] = rel_area
             response['score'] = score
     return JsonResponse(response)
 
@@ -135,6 +143,11 @@ def cityPolygon(request, id):
     item = models.City.objects.filter(id=id).first()
     if item is None:
         raise Http404
+    cached_url = os.path.join(settings.BASE_DIR, 'ui', 'static', 'pxs', 'cities', '{}.png'.format(item.pk))
+    if os.path.isfile(cached_url):
+        response = HttpResponse(content_type='image/png')
+        functions.read_image(cached_url).save(response, 'PNG')
+        return response
     tiles = models.Tile.objects \
         .annotate(geom=Cast('mpoly', GeometryField())) \
         .filter(geom__within=item.mpoly)
@@ -144,6 +157,7 @@ def cityPolygon(request, id):
         densities.append({'x': centroid.x, 'y': centroid.y, 'value': tile.tree_density})
     polygon = functions.get_polygon(json.loads(item.mpoly.json), densities=densities)
     response = HttpResponse(content_type='image/png')
+    polygon.save(cached_url, 'png')
     polygon.save(response, 'PNG')
     return response
 
@@ -153,6 +167,11 @@ def cantonPolygon(request, id):
     item = models.Canton.objects.filter(id=id).first()
     if item is None:
         raise Http404
+    cached_url = os.path.join(settings.BASE_DIR, 'ui', 'static', 'pxs', 'cantons', '{}.png'.format(item.pk))
+    if os.path.isfile(cached_url):
+        response = HttpResponse(content_type='image/png')
+        functions.read_image(cached_url).save(response, 'PNG')
+        return response
     tiles = models.Tile.objects \
         .annotate(geom=Cast('mpoly', GeometryField())) \
         .filter(geom__within=item.mpoly)
@@ -162,5 +181,6 @@ def cantonPolygon(request, id):
         densities.append({'x': centroid.x, 'y': centroid.y, 'value': tile.tree_density})
     polygon = functions.get_polygon(json.loads(item.mpoly.json), densities=densities)
     response = HttpResponse(content_type='image/png')
+    polygon.save(cached_url, 'png')
     polygon.save(response, 'PNG')
     return response

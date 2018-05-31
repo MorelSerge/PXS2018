@@ -1,16 +1,9 @@
+function precisionRound(number, precision) {
+    var factor = Math.pow(10, precision);
+    return Math.round(number * factor) / factor;
+  }
+
 $(document).ready(function () {
-    $('#scale-chooser .option').click(function () {
-        $('#scale-chooser .option').removeClass('selected');
-        $(this).addClass('selected');
-    });
-
-    $('#map-close, #map-close a, #map-wrapper').click(function () {
-        hideMap();
-    });
-
-    $('#map').click(function (e) {
-        e.stopPropagation();
-    });
 
     var map;
     var alertTimeout;
@@ -24,12 +17,142 @@ $(document).ready(function () {
     var drawButtonOptions;
     var cantonScores;
     var cityScores;
+    var currentLeft;
+    var currentRight;
+
+    $('#scale-chooser .option').click(function () {
+        selectedState = $(this).data('state');
+        if (dataType != selectedState) {
+            $('#scale-chooser .option').removeClass('selected');
+            $(this).addClass('selected');
+            currentRight = undefined;
+            currentLeft = undefined;
+            $('#stat-compare-wrapper .name.left span').text('-');
+            $('#stat-compare-wrapper .name.right span').text('-');
+            $('#stat-compare-wrapper .score.left span').text('0');
+            $('#stat-compare-wrapper .score.right span').text('0');
+            $('#scale-chooser').data('state', selectedState);
+            $(".map-image-wrapper[data-side=left]").css(
+                'background-image', 'url("/static/pxs/empty-city.png")'
+            );
+            $(".map-image-wrapper[data-side=right]").css(
+                'background-image', 'url("/static/pxs/empty-city.png")'
+            );
+            $(".map-image-wrapper[data-side=left] > .desc").show()
+            $(".map-image-wrapper[data-side=right] > .desc").show()
+            $('#stat-compare-wrapper .stat').height(0);
+            $('#stat-compare-wrapper .stat-number').text('-');
+            $('.stat[data-type=rank] .number').text('-');
+            $('.stat[data-type=tree-coverage] .number').text('-');
+            $('.stat[data-type=score] .number').text('-');
+            $('.name[data-side=left] > span').show().text('Choose an area');
+            $('.name[data-side=right] > span').show().text('Choose an area');
+            dataType = selectedState;
+        }
+    });
+
+    $('#map-close, #map-close a, #map-wrapper').click(function () {
+        hideMap();
+    });
+
+    $('#map').click(function (e) {
+        e.stopPropagation();
+    });  
+
+    var animateStats = function(state) {
+        if (state == 'map') {
+            if (currentLeft) {
+                $('#stat-compare-wrapper .density .stat.left').height(currentLeft.tree_density * 100 + '%');
+                $('#stat-compare-wrapper .density .stat-number.left').text(precisionRound(currentLeft.tree_density * 100, 2) + '%');
+                $('#stat-compare-wrapper .sparsity .stat.left').height(currentLeft.tree_sparsity * 100 + '%');
+                $('#stat-compare-wrapper .sparsity .stat-number.left').text(precisionRound(currentLeft.tree_sparsity * 100, 2) + '%');
+                $('#stat-compare-wrapper .area .stat.left').height(currentLeft.rel_area * 100 + '%');
+                $('#stat-compare-wrapper .area .stat-number.left').text(precisionRound(currentLeft.rel_area * 100, 2) + '%');
+                if (currentLeft.cars_pp) {
+                    $('#stat-compare-wrapper .cars .stat.left').height(currentLeft.cars_pp * 100 + '%');
+                    $('#stat-compare-wrapper .cars .stat-number.left').text(precisionRound(currentLeft.cars_pp * 100, 2) + '%');
+                    $('#stat-compare-wrapper .population .stat.left').height(currentLeft.rel_population * 100 + '%');
+                    $('#stat-compare-wrapper .population .stat-number.left').text(precisionRound(currentLeft.rel_population * 100, 2) + '%');
+                }
+            }
+            if (currentRight) {
+                $('#stat-compare-wrapper .density .stat.right').height(currentRight.tree_density * 100 + '%');
+                $('#stat-compare-wrapper .density .stat-number.right').text(precisionRound(currentRight.tree_density * 100, 2) + '%');
+                $('#stat-compare-wrapper .sparsity .stat.right').height(currentRight.tree_sparsity * 100 + '%');
+                $('#stat-compare-wrapper .sparsity .stat-number.right').text(precisionRound(currentRight.tree_sparsity * 100, 2) + '%');
+                $('#stat-compare-wrapper .area .stat.right').height(currentRight.rel_area * 100 + '%');
+                $('#stat-compare-wrapper .area .stat-number.right').text(precisionRound(currentRight.rel_area * 100, 2) + '%');
+                if (currentLeft.cars_pp) {
+                    $('#stat-compare-wrapper .cars .stat.right').height(currentRight.cars_pp * 100 + '%');
+                    $('#stat-compare-wrapper .cars  .stat-number.right').text(precisionRound(currentRight.cars_pp * 100, 2) + '%');
+                    $('#stat-compare-wrapper .population .stat.right').height(currentRight.rel_population * 100 + '%');
+                    $('#stat-compare-wrapper .population .stat-number.right').text(precisionRound(currentRight.rel_population * 100, 2) + '%');
+                }
+            }
+            if (currentLeft && currentRight) {
+                $('#stat-compare-wrapper .stat').removeClass('first second');
+                $('#stat-compare-wrapper .density .left').addClass(currentLeft.tree_density > currentRight.tree_density ? 'first' : 'second');
+                $('#stat-compare-wrapper .density .right').addClass(currentLeft.tree_density < currentRight.tree_density ? 'first' : 'second');
+                $('#stat-compare-wrapper .sparsity .left').addClass(currentLeft.tree_sparsity < currentRight.tree_sparsity ? 'first' : 'second');
+                $('#stat-compare-wrapper .sparsity .right').addClass(currentLeft.tree_sparsity > currentRight.tree_sparsity ? 'first' : 'second');
+                $('#stat-compare-wrapper .area .left').addClass(currentLeft.rel_area > currentRight.rel_area ? 'first' : 'second');
+                $('#stat-compare-wrapper .area .right').addClass(currentLeft.rel_area < currentRight.rel_area ? 'first' : 'second');
+                if (currentLeft.cars_pp) {
+                    $('#stat-compare-wrapper .cars .left').addClass(currentLeft.cars_pp < currentRight.cars_pp ? 'first' : 'second');
+                    $('#stat-compare-wrapper .cars .right').addClass(currentLeft.cars_pp > currentRight.cars_pp ? 'first' : 'second');
+                    $('#stat-compare-wrapper .population .left').addClass(currentLeft.rel_population > currentRight.rel_population ? 'first' : 'second');
+                    $('#stat-compare-wrapper .population .right').addClass(currentLeft.rel_population < currentRight.rel_population ? 'first' : 'second');
+                }
+            }
+        } else {
+            $('#stat-compare-wrapper .stat').height(0);
+        }
+    }
+
+    var showStatView = function(data, side) {
+        if (data.name) {
+            $('.stat-compare-names').css({display: 'flex'});
+            $name = $('#stat-compare-wrapper .name.' + side + ' span');
+            $name.text(data.name);
+            $('#stat-compare-wrapper .population').css({display: 'flex'});
+            $('#stat-compare-wrapper .cars').css({display: 'flex'});
+            $('.stat-compare-scores .middle').html('');
+        } else {
+            $('.stat-compare-names').hide();
+            $('#stat-compare-wrapper .population').css({display: 'none'});
+            $('#stat-compare-wrapper .cars').css({display: 'none'});
+            $('.stat-compare-scores .middle').html('<span><i class="fas fa-arrows-alt-h"></i></span>');
+        }
+        $score = $('#stat-compare-wrapper .score.' + side + ' span');
+        $score.text(Math.round(data.score));
+        if (side == 'left') {
+            currentLeft = data;
+        } else {
+            currentRight = data;
+        }
+    }
+
+    $('.switcher a').click(function() {
+        state = $(this).parent().data('state');
+        if (state == 'map') {
+            $(this).find('i').removeClass('fa-toggle-on').addClass('fa-toggle-off');
+            $('#stat-compare-wrapper').css({display: 'flex'});
+            $('#splitscreen').css({display: 'none'});
+        } else {
+            $(this).find('i').removeClass('fa-toggle-off').addClass('fa-toggle-on');
+            $('#stat-compare-wrapper').css({display: 'none'});
+            $('#splitscreen').css({display: 'flex'});
+        }
+        animateStats(state);
+        state = $(this).parent().data('state', state == 'map' ? 'satistics' : 'map');
+        return false;
+    });
 
     if (window.location.hash) {
         if (['canton', 'city', 'area'].indexOf(window.location.hash.substr(1)) > -1) {
             dataType = window.location.hash.substr(1);
             $('#scale-chooser .option').each(function() {
-                if ($(this).data('type') == dataType) {
+                if ($(this).data('state') == dataType) {
                     $(this).addClass('selected');
                 } else {
                     $(this).removeClass('selected');
@@ -41,10 +164,6 @@ $(document).ready(function () {
     $('.map-image-wrapper').click(function() {
         currentSide = $(this).data('side');
         showMap();
-    });
-
-    $('#scale-chooser .option').click(function() {
-        dataType = $(this).data('type');
     });
 
     var showAlert = function(alertText) {
@@ -87,6 +206,7 @@ $(document).ready(function () {
             dataType: 'json',
             url: url,
             success: function (data) {
+                showStatView(data, side);
                 $name = $('.name[data-side=' + side + '] > span');
                 $name.hide();
                 stats = $('.stats[data-side=' + side + ']');
@@ -108,6 +228,7 @@ $(document).ready(function () {
             dataType: 'json',
             url: '/' + (type == 'city' ? 'city' : 'canton') + '/' + id,
             success: function (data) {
+                showStatView(data.fields, side);
                 $name = $('.name[data-side=' + side + '] > span');
                 $name.text(data.fields.name);
                 $name.show();

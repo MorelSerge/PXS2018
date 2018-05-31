@@ -65,6 +65,20 @@ class Canton(models.Model):
                 return canton.rank
         return None
 
+    def get_relative_population(self):
+        nr_of_country_cities = self.country.city_set.count()
+        rel_population = self.population / self.country.population
+        return rel_population
+
+    def get_relative_area(self):
+        nr_of_country_cities = self.country.city_set.count()
+        rel_area = self.area / self.country.area
+        return rel_area
+
+    def get_cars_pp(self):
+        cars_pp = self.cars / self.population
+        return cars_pp
+
     def __str__(self):
         return 'canton/{}'.format(self.name)
 
@@ -92,6 +106,20 @@ class City(models.Model):
             if city.pk == self.pk:
                 return city.rank
         return None
+
+    def get_relative_population(self):
+        nr_of_country_cities = self.country.city_set.count()
+        rel_population = self.population / self.country.population
+        return rel_population
+
+    def get_relative_area(self):
+        nr_of_country_cities = self.country.city_set.count()
+        rel_area = self.area / self.country.area
+        return rel_area
+
+    def get_cars_pp(self):
+        cars_pp = self.cars / self.population
+        return cars_pp
 
     def __str__(self):
         return 'city/{}'.format(self.name)

@@ -4,8 +4,8 @@
         <h2>A project by Serge Morel</h2>
     </div>
     <nav>
-        <a href="/" class="selected">Home</a>
-        <a href="/ranking">Ranking</a>
-        <a href="/about">About</a>
+        <a href="{% url 'ui:index' %}" class="selected">Home</a>
+        <a href="{% url 'ui:ranking' %}">Ranking</a>
+        <a href="{% url 'ui:index' %}">About</a>
     </nav>
 </div>

@@ -56,30 +56,119 @@ body {
   #content #scale-chooser {
     display: flex;
     justify-content: center;
+    align-items: center;
     margin: 1em 0; }
-    #content #scale-chooser > .option {
-      display: block;
-      text-align: center;
-      padding: 1em 3em;
-      color: #47525E;
-      border: 2px solid #47525E;
-      border-right: none;
-      text-decoration: none; }
-      #content #scale-chooser > .option:visited, #content #scale-chooser > .option:active, #content #scale-chooser > .option:focus {
+    #content #scale-chooser .placeholder {
+      flex-grow: 1; }
+    #content #scale-chooser .switcher {
+      flex-grow: 1;
+      flex-basis: 0;
+      text-align: right;
+      font-size: 1.25em; }
+      #content #scale-chooser .switcher a {
+        text-decoration: none; }
+    #content #scale-chooser .buttons {
+      display: flex;
+      justify-content: center; }
+      #content #scale-chooser .buttons > .option {
+        display: block;
+        text-align: center;
+        padding: 1em 3em;
+        color: #47525E;
+        border: 2px solid #47525E;
+        border-right: none;
         text-decoration: none;
-        color: #47525E; }
-      #content #scale-chooser > .option:hover:not(.selected) {
-        text-decoration: none;
-        background: #E5E9F2; }
-      #content #scale-chooser > .option.selected {
-        color: #19a301; }
-      #content #scale-chooser > .option:first-child {
-        border-top-left-radius: 5px;
-        border-bottom-left-radius: 5px; }
-      #content #scale-chooser > .option:last-child {
-        border-right: 2px solid #47525E;
-        border-top-right-radius: 5px;
-        border-bottom-right-radius: 5px; }
+        width: 10em; }
+        #content #scale-chooser .buttons > .option:visited, #content #scale-chooser .buttons > .option:active, #content #scale-chooser .buttons > .option:focus {
+          text-decoration: none;
+          color: #47525E; }
+        #content #scale-chooser .buttons > .option:hover:not(.selected) {
+          text-decoration: none;
+          background: #E5E9F2; }
+        #content #scale-chooser .buttons > .option.selected {
+          color: #19a301; }
+        #content #scale-chooser .buttons > .option:first-child {
+          border-top-left-radius: 5px;
+          border-bottom-left-radius: 5px; }
+        #content #scale-chooser .buttons > .option:last-child {
+          border-right: 2px solid #47525E;
+          border-top-right-radius: 5px;
+          border-bottom-right-radius: 5px; }
+  #content #stat-compare-wrapper {
+    display: none;
+    flex-grow: 1;
+    flex-direction: column; }
+    #content #stat-compare-wrapper .stat-compare-names {
+      display: flex;
+      justify-content: center; }
+      #content #stat-compare-wrapper .stat-compare-names .left, #content #stat-compare-wrapper .stat-compare-names .right {
+        width: 46%; }
+      #content #stat-compare-wrapper .stat-compare-names .left {
+        text-align: right; }
+      #content #stat-compare-wrapper .stat-compare-names .right {
+        text-align: left; }
+      #content #stat-compare-wrapper .stat-compare-names .middle {
+        text-align: center;
+        width: 8%; }
+      #content #stat-compare-wrapper .stat-compare-names .name {
+        margin: 0 1em; }
+        #content #stat-compare-wrapper .stat-compare-names .name span {
+          font-size: 1.5em;
+          font-weight: bold; }
+    #content #stat-compare-wrapper .stat-compare-scores {
+      display: flex;
+      justify-content: center; }
+      #content #stat-compare-wrapper .stat-compare-scores .left, #content #stat-compare-wrapper .stat-compare-scores .right {
+        width: 46%; }
+      #content #stat-compare-wrapper .stat-compare-scores .left {
+        text-align: right; }
+      #content #stat-compare-wrapper .stat-compare-scores .right {
+        text-align: left; }
+      #content #stat-compare-wrapper .stat-compare-scores .middle {
+        text-align: center;
+        width: 8%; }
+      #content #stat-compare-wrapper .stat-compare-scores .score {
+        margin: 0 1em; }
+        #content #stat-compare-wrapper .stat-compare-scores .score span {
+          font-size: 3em;
+          font-weight: bold;
+          color: #19a301; }
+    #content #stat-compare-wrapper .stat-compare {
+      flex-grow: 1;
+      display: flex;
+      justify-content: space-evenly;
+      margin-top: 1em; }
+      #content #stat-compare-wrapper .stat-compare .stat-wrapper {
+        width: 10%;
+        display: flex;
+        flex-direction: column; }
+        #content #stat-compare-wrapper .stat-compare .stat-wrapper .stat-inner-wrapper {
+          flex-grow: 1;
+          display: flex;
+          align-items: flex-end;
+          height: 100%; }
+          #content #stat-compare-wrapper .stat-compare .stat-wrapper .stat-inner-wrapper .stat-last-wrapper {
+            height: 100%;
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; }
+            #content #stat-compare-wrapper .stat-compare .stat-wrapper .stat-inner-wrapper .stat-last-wrapper .stat-number {
+              text-align: center;
+              margin-bottom: 0.5em; }
+            #content #stat-compare-wrapper .stat-compare .stat-wrapper .stat-inner-wrapper .stat-last-wrapper .stat {
+              transition: height 1s ease-out;
+              height: 0;
+              box-shadow: 0 0 5px #47525E; }
+              #content #stat-compare-wrapper .stat-compare .stat-wrapper .stat-inner-wrapper .stat-last-wrapper .stat.first {
+                background-color: #00441b; }
+              #content #stat-compare-wrapper .stat-compare .stat-wrapper .stat-inner-wrapper .stat-last-wrapper .stat.second {
+                background-color: #006d2c; }
+        #content #stat-compare-wrapper .stat-compare .stat-wrapper .stat-name {
+          text-align: center;
+          margin: 1em;
+          font-size: 1.25em;
+          height: 3.75em; }
   #content #splitscreen {
     display: flex;
     align-items: stretch;

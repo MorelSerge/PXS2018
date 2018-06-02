@@ -1,7 +1,7 @@
 import os
 import json
 import numpy as np
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.conf import settings
 from django.http import HttpResponse, Http404, JsonResponse
 from django.core.serializers import serialize
@@ -184,3 +184,7 @@ def cantonPolygon(request, id):
     polygon.save(cached_url, 'png')
     polygon.save(response, 'PNG')
     return response
+
+def tile(request, x, y, z):
+    real_url = '/static/pxs/tiles/{}/{}/{}.png'.format(z, x, y)
+    return redirect(real_url, permanent=False)

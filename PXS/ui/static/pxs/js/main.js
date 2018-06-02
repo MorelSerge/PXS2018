@@ -181,8 +181,25 @@ $(document).ready(function () {
         }, 2000);
     }
 
+    var showAreaMap = function(side) {
+        var areaMap = L.map('real-map-' + side).setView([46.521880, 6.632777], 16);
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 16,
+            minZoom: 16,
+            id: 'mapbox.satellite',
+            opacity: 0.75,
+            accessToken: 'pk.eyJ1Ijoidmx1ZiIsImEiOiJjamVpbDMxamEwYmI3MnFuNW8ybnI0NHdyIn0.dxuL9WvARgL4FFbSt-KUqA'
+        }).addTo(areaMap);
+        L.tileLayer('/tile/{z}/{x}/{y}.png', {
+            maxZoom: 16,
+            minZoom: 16,
+            opacity: 0.75
+        }).addTo(areaMap);
+    }
+
     var loadPolygon = function(side, type, id) {
-        if (type == 'city') {
+        /*if (type == 'city') {
             $(".map-image-wrapper[data-side=" + side + "]").css(
                 'background-image', 'url(' + '/city/' + id + '/polygon)'
             );
@@ -191,7 +208,10 @@ $(document).ready(function () {
                 'background-image', 'url(' + '/canton/' + id + '/polygon)'
             );
         }
-        $(".map-image-wrapper[data-side=" + side + "] > .desc").hide()
+        $(".map-image-wrapper[data-side=" + side + "] > .desc").hide()*/
+        $(".map-image-wrapper[data-side=" + side + "]").hide();
+        $('#real-map-' + side).show();
+        showAreaMap(side);
     }
 
     var loadPolygonUrl = function(side, url) {

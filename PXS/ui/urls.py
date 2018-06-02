@@ -1,5 +1,5 @@
 """ URLs """
-from django.urls import path
+from django.urls import path, re_path
 
 from . import views
 
@@ -16,4 +16,5 @@ urlpatterns = [
     path('city/<int:id>/polygon', views.cityPolygon, name='cityPolygon'),
     path('polygon', views.polygon, name='polygon'),
     path('polygon/stats', views.polygonStats, name='polygonStats'),
+    re_path(r'^tile/(?P<z>[0-9]+)/(?P<x>[0-9]+)/(?P<y>[0-9]+).png$', views.tile, name='tile')
 ]

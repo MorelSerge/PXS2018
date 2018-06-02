@@ -253,8 +253,6 @@ body {
                     align-items: center;
                     cursor: pointer;
                     background: url('/static/pxs/empty-city.png') center/contain no-repeat;
-                    width: 100%;
-                    height: 100%;
                     &:hover {
                         background-image: url('/static/pxs/empty-city-hover.png');
                     }
@@ -267,6 +265,14 @@ body {
                             color: $accent;
                         }
                     }
+                }
+                #real-map-left, #real-map-right {
+                    display: none;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
                 }
             }
             .stats-container {

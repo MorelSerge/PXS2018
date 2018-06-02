@@ -202,9 +202,7 @@ body {
           justify-content: center;
           align-items: center;
           cursor: pointer;
-          background: url("/static/pxs/empty-city.png") center/contain no-repeat;
-          width: 100%;
-          height: 100%; }
+          background: url("/static/pxs/empty-city.png") center/contain no-repeat; }
           #content #splitscreen > .field .map .map-image-wrapper:hover {
             background-image: url("/static/pxs/empty-city-hover.png"); }
           #content #splitscreen > .field .map .map-image-wrapper .desc {
@@ -213,6 +211,13 @@ body {
             font-weight: 800; }
             #content #splitscreen > .field .map .map-image-wrapper .desc i {
               color: #19a301; }
+        #content #splitscreen > .field .map #real-map-left, #content #splitscreen > .field .map #real-map-right {
+          display: none;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%; }
       #content #splitscreen > .field .stats-container {
         padding: 2em 2em 0 2em; }
       #content #splitscreen > .field .stats {
